@@ -16,16 +16,16 @@ const Users = sequelize.define<UserInstance>(
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    name: {
+    nome: {
       type: DataTypes.STRING,
     },
     email: {
       type: DataTypes.STRING,
     },
-    password: {
+    senha: {
       type: DataTypes.STRING,
     },
-    session_token: {
+    token_session: {
       type: DataTypes.STRING,
     },
   },

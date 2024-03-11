@@ -6,13 +6,14 @@ export const getAllProducts = async (req:Request, res: Response) => {
 
 
   if (products.length === 0) {
-    return res.status(400).send({
-      message: "Sem Clients cadastrado",
+    return res.status(200).send({
+      message: "Sem produtos cadastrado",
+      produtos: products,
     });
   } else {
     return res.status(200).send({
       message: "Produtos cadastrados",
-      clients: products,
+      produtos: products,
     });
   }
 };
@@ -74,7 +75,8 @@ export const deleteClient = async (req: Request, res: Response) => {
 };
 
 export const putClient = async (req: Request, res: Response) => {
-  const { id, titulo, descricao, preco, marca, categoria, imagem } = req.body;
+  const { id } = req.params;
+  const { titulo, descricao, preco, marca, categoria, imagem } = req.body;
 
   await Products.update(
     { titulo, descricao, preco, marca, categoria, imagem },

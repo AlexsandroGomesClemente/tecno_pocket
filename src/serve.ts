@@ -7,8 +7,8 @@ import cors from "cors";
 
 const server = express();
 dotenv.config();
-server.use(express.json());
 server.use(cors());
+server.use(express.json());
 server.use(router);
 
 server.listen(process.env.PORT, () => {
