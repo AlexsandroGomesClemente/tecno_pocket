@@ -1,43 +1,57 @@
 import Products from "../models/Products";
 import { Request, Response } from "express";
 
-export const getAllProducts = async (req:Request, res: Response) => {
-  const products = await Products.findAll();
+export const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    // Busca todos os produtos no banco de dados
+    const products = await Products.findAll();
 
+    // Percorre a lista de produtos e adiciona a URL da imagem a cada produto
+    const productsWithImageUrl = products.map((product) => ({
+      ...product.dataValues,
+      imagemUrl: `${req.protocol}://${req.get("host")}${product.imagem}`,
+    }));
 
-  if (products.length === 0) {
-    return res.status(200).send({
-      message: "Sem produtos cadastrado",
-      produtos: products,
-    });
-  } else {
-    return res.status(200).send({
-      message: "Produtos cadastrados",
-      produtos: products,
+    // Verifica se existem produtos cadastrados
+    if (productsWithImageUrl.length === 0) {
+      return res.status(200).send({
+        message: "Sem produtos cadastrados",
+        produtos: productsWithImageUrl,
+      });
+    } else {
+      return res.status(200).send({
+        message: "Produtos cadastrados",
+        produtos: productsWithImageUrl,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({
+      message: "Erro ao buscar produtos",
     });
   }
 };
 
-export const getProduct = async (req:Request, res: Response) => {
-    const {id} = req.body 
+export const getProduct = async (req: Request, res: Response) => {
+  const { id } = req.body;
 
-    const products = await Products.findAll({
-        where :{
-            id: id
-        }
+  const products = await Products.findAll({
+    where: {
+      id: id,
+    },
+  });
+
+  if (products.length === 0) {
+    return res.status(400).send({
+      message: "Produto não encontrado",
     });
-  
-    if (products.length === 0) {
-      return res.status(400).send({
-        message: "Produto não encontrado",
-      });
-    } else {
-      return res.status(200).send({
-        message: "Produto encontrado",
-        clients: products,
-      });
-    }
-  };
+  } else {
+    return res.status(200).send({
+      message: "Produto encontrado",
+      clients: products,
+    });
+  }
+};
 
 export const newProduct = async (req: Request, res: Response) => {
   const { titulo, descricao, preco, marca, categoria, imagem } = req.body;
