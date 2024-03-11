@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import multer from "multer";
 
-// Configure o multer para armazenar as imagens no servidor
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/upload");
@@ -24,7 +23,6 @@ server.use(express.json());
 server.use(router);
 server.use(express.static('public'))
 
-// Rota para lidar com o upload da imagem
 server.post("/uploadImage", upload.single("imagem"), async (req: any, res) => {
   try {
     const imageUrl = `/upload/${req.file.filename}`;
