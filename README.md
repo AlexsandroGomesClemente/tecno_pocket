@@ -25,13 +25,8 @@ Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em s
     ```
 
 3. Crie e preencha o arquivo env:
-
-    ```bash
-    npm install
-    ```
-4. Inicie o servidor de desenvolvimento:
-
-    ```bash
+   
+      ```bash
    PORT = 'PORTA DO SERVIDOR'
 
    MYSQL_PORT = 'PORTA DO BANCO DE DADOS'
@@ -40,6 +35,11 @@ Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em s
    MYSQL_SENHA = 'SENHA'
 
    MYSQL_URL = "HOST"
+    ```
+4. Inicie o servidor de desenvolvimento:
+
+    ```bash
+      npm run serve
     ```
 
    O aplicativo Node.js estará disponível para você.
